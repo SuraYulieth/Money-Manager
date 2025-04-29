@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react'
 import './App.css'
 //importar modulos de Firebase
 import appFirebase from '../src/Credenciales'
