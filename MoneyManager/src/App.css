@@ -1,0 +1,22 @@
+.padre{
+    display: flex; /*Para alinear en todo el centro*/
+    align-items: center;
+    height: 100%;
+}
+
+.tamaño.imagen{
+    width: 50%;
+    height: 800px;
+    margin-top: 100px;
+}
+
+.cajatexto{
+    background-color: #cccccc40;
+    border-color: aqua;
+    border-radius: 30px;
+    width:100%;
+    padding: 15px;
+    border: width 0px;
+    margin-bottom: 20px;
+}
+
