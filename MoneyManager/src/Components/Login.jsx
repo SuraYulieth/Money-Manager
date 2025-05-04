@@ -22,9 +22,10 @@ const Login = () => {
 
         {/*Columna grande*/}
         <div className="col-md-8">
-          <img src={Imagen} alt="" className=""/>
-          <h2>Adios</h2>
-        </div> 
+        <img src={Imagen} alt="" className="img-fluid"/>
+        <h2 className="text-center">BIENVENIDO A MONEY MANAGER</h2>
+        
+        </div>
 
 
       </div>

@@ -5,14 +5,19 @@
 }
 
 .tamaño.imagen{
-    width: 50%;
-    height: 800px;
+    max-width: 100%;
+    height: 800px; 
+    object-fit: cover; 
     margin-top: 100px;
 }
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
 
 .cajatexto{
-    background-color: #cccccc40;
-    border-color: aqua;
+    background-color: #0c0b0b40;
+    border-color: rgb(13, 26, 207);
     border-radius: 30px;
     width:100%;
     padding: 15px;
