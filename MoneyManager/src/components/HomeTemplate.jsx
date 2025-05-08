@@ -1,13 +1,11 @@
+import React from "react";
 import styled from "styled-components";
-import { Carousel, Btnsave, v } from "../index";
+//import { Carousel, Btnsave, v } from "../index";
 
 export function HomeTemplate() {
   return (
     <Main>
       <Container>
-        <Box>
-          <Carousel />
-        </Box>
         <Title>
           Bienvenido a MONEY MANAGER <br /> 
         </Title>
@@ -130,3 +128,4 @@ const ButtonContainer = styled.div`
     width: 100%;
   }
 `;
+ 

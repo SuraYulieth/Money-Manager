@@ -27,7 +27,6 @@ function App() {
   return (
     <>
       <div>
-        
         {user ? <Home userEmail = {user.email} /> : <Login/>}
       </div> 
     </>
