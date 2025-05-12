@@ -352,8 +352,7 @@ const ObjetivoAhorroForm = () => (
 );
 
 
-export function HomeTemplate() {
-  const [activeForm, setActiveForm] = useState(null);
+export function HomeTemplate({ activeForm }) {
 
   const renderForm = () => {
     switch (activeForm) {
@@ -386,11 +385,6 @@ export function HomeTemplate() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-light">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#" onClick={() => setActiveForm(null)}>
-            Money Manager
-          </a>
           <button
             className="navbar-toggler"
             type="button"
@@ -456,8 +450,6 @@ export function HomeTemplate() {
               </li>
             </ul>
           </div>
-        </div>
-      </nav>
       <Main>
         <Container>
           <InfoBox>{renderForm()}</InfoBox>

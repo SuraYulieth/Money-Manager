@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import Imagen from "../assets/ImagenInicio.jpg";
+import Imagen from "../assets/../assets/Imagen1.png";
 import appFirebase from "../services/firebaseconfig";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
+import Navbar from "../components/ui/NavigationBar";
+import { useNavigate } from "react-router-dom";
 
 const auth = getAuth(appFirebase);
 const db = getFirestore(appFirebase);
 
+
 const Login = () => {
   const [registrando, setRegistrando] = useState(false);
   const { usuario } = useAuth();
+  const navigate = useNavigate();
 
   const [nombre, setNombre] = useState("");
   const [apellidos, setApellidos] = useState("");
@@ -50,6 +54,7 @@ const Login = () => {
     } else {
       try {
         await signInWithEmailAndPassword(auth, correo, contraseña);
+        navigate("/home");
       } catch (error) {
         alert("El correo o la contraseña son incorrectos");
       }
@@ -57,13 +62,18 @@ const Login = () => {
   };
 
   return (
-    <div className="row align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f0f0f0' }}>
+    <>
+    <Navbar/>
+    <div className="container-fluid">
+    <div className="row align-items-center">
+
+
       <div className="col-lg-6 mb-4 mb-lg-0 text-center">
         <h2 className="text-primary fw-bold mb-4" style={{ fontSize: '2.5rem' }}>
-          <span style={{ fontSize: '0.6em' }}>BIENVENIDO A </span>
-          MONEY MANAGER
+          <span style={{ fontSize: '0.6em' }}>BIENVENIDO A MONEY MANAGER</span>
+          
         </h2>
-        <img src={Imagen} alt="Imagen de inicio" className="img-fluid rounded shadow" style={{ maxWidth: '80%', borderRadius: '0.5rem', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }} />
+        <img src={Imagen} alt="Imagen de inicio" className="img-fluid rounded shadow" style={{ maxWidth: '100%', borderRadius: '0.5rem', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }} />
       </div>
 
       <div className="col-lg-6">
@@ -197,6 +207,8 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </div>
+    </>
   );
 };
 

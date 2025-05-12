@@ -1,20 +1,23 @@
 import { signOut, getAuth } from "firebase/auth";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import appFirebase from "../services/firebaseconfig";
 import Imagen1 from "../assets/Imagen1.png";
 import { HomeTemplate } from "../components/HomeTemplate";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/ui/NavigationBar";
+
 
 const auth = getAuth(appFirebase);
 
 const Home = ({ userEmail }) => {
   const { usuario } = useAuth();
   const navigate = useNavigate();
+  const [activeForm, setActiveForm] = useState(null);
 
   useEffect(() => {
     if (!usuario) {
-      navigate("/login");
+      navigate("/home");
     }
   }, [usuario, navigate]);
 
@@ -22,7 +25,7 @@ const Home = ({ userEmail }) => {
     try {
       await signOut(auth);
       alert("Cerrando sesión");
-      navigate("/login");
+      navigate("/home");
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
@@ -30,6 +33,7 @@ const Home = ({ userEmail }) => {
 
   return (
     <>
+      <Navbar setActiveForm={setActiveForm} />
       <div className="container-fluid">
         <div className="row align-items-center">
 

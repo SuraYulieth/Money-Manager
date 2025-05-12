@@ -5,10 +5,11 @@ import appFirebase from "../services/firebaseconfig";
 
 const auth = getAuth(appFirebase);
 
-const AuthContext = createContext();
+const AuthContext = createContext({ usuario: null });
 
 export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
+  const auth = getAuth(appFirebase);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
