@@ -5,7 +5,9 @@ import appFirebase from '../src/services/firebaseconfig';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Inicio from './pages/Inicio';
-import Navbar from './components/ui/NavigationBar';
+import Ingresos from './pages/Ingresos'
+import Gastos from './pages/Gastos'
+import Ahorro from './pages/Ahorro';
 import './App.css';
 
 const auth = getAuth(appFirebase);
@@ -44,6 +46,9 @@ function App() {
             <Route path="/inicio" element={<Inicio />} />
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={user ? <Home userEmail={user.email} /> : <Navigate to="/login" />} />
+            <Route path="/ingresos" element={<Ingresos />} />
+            <Route path="/gastos" element={<Gastos />} />
+            <Route path="/ahorro" element={<Ahorro/>}/>
           </Routes>
         </main>
 

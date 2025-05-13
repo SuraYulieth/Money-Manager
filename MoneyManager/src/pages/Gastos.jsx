@@ -1,13 +1,102 @@
-import React, { useState } from "react";
-import Navbar from "../components/ui/NavigationBar";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styled from "styled-components";
+import { useState } from 'react';
+import Navbar from '../components/ui/NavigationBar';
+
+const GastosForm = () => {
+  const categoriasBase = ["Comida", "Transporte", "Ocio", "Otros"];
+  const [categoriaGastoSeleccionada, setCategoriaGastoSeleccionada] = useState('');
+  const [otraCategoriaGasto, setOtraCategoriaGasto] = useState('');
+
+  const handleCategoriaChange = (event) => {
+    setCategoriaGastoSeleccionada(event.target.value);
+  };
+
+  const handleOtraCategoriaChange = (event) => {
+    setOtraCategoriaGasto(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const categoriaFinal = categoriaGastoSeleccionada === "Otros" ? otraCategoriaGasto : categoriaGastoSeleccionada;
+    console.log("Categoría de Gasto:", categoriaFinal);
+    // Aquí iría la lógica para guardar el gasto
+  };
+
+  return (
+    <>
+    <Navbar/>
+    <FormCard>
+      <TitleForm>Formulario de Gastos</TitleForm>
+      <p>Formulario para ingresar gastos.</p>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <Label htmlFor="descripcion" className="form-label">
+            Descripción
+          </Label>
+          <Input type="text" className="form-control" id="descripcion" />
+        </div>
+        <div className="mb-3">
+          <Label htmlFor="categoriaGastos" className="form-label">
+            Categoría de Gastos
+          </Label>
+          <select
+            className="form-select"
+            id="categoriaGastos"
+            value={categoriaGastoSeleccionada}
+            onChange={handleCategoriaChange}
+          >
+            <option value="" disabled>Seleccionar categoría</option>
+            {categoriasBase.map((categoria, index) => (
+              <option key={index} value={categoria}>
+                {categoria}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {categoriaGastoSeleccionada === "Otros" && (
+          <div className="mb-3">
+            <Label htmlFor="otraCategoriaGasto" className="form-label">
+              Otra Categoría de Gasto
+            </Label>
+            <Input
+              type="text"
+              className="form-control"
+              id="otraCategoriaGasto"
+              value={otraCategoriaGasto}
+              onChange={handleOtraCategoriaChange}
+              required
+            />
+          </div>
+        )}
+
+        <div className="mb-3">
+          <Label htmlFor="fecha" className="form-label">
+            Fecha
+          </Label>
+          <Input type="datetime-local" className="form-control" id="fecha" />
+        </div>
+        <div className="mb-3">
+          <Label htmlFor="monto" className="form-label">
+            Monto
+          </Label>
+          <Input type="number" className="form-control" id="monto" />
+        </div>
+        <Button type="submit" className="btn btn-primary">
+          Agregar Gasto
+        </Button>
+      </form>
+    </FormCard>
+    </>
+  );
+};
 
 const IngresosForm = () => {
   const categoriasIngresos = ["Salario", "Extras"];
 
   return (
-    <>
-    <Navbar/>
     <FormCard>
       <TitleForm>Ingresos</TitleForm>
       <p>Formulario para registrar ingresos.</p>
@@ -48,93 +137,10 @@ const IngresosForm = () => {
         </Button>
       </form>
     </FormCard>
-    </>
   );
 };
 
-export default IngresosForm;
-
-/*
-const CategoriaIngresosForm = () => {
-  // Simulamos las opciones de categoría que vienen de la imagen
-  const categorias = ["Hogar", "Alimento", "Vestimenta", "Otro"];
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
-  const [otraCategoria, setOtraCategoria] = useState('');
-
-  const handleCategoriaChange = (event) => {
-    setCategoriaSeleccionada(event.target.value);
-  };
-
-  const handleOtraCategoriaChange = (event) => {
-    setOtraCategoria(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const categoriaFinal = categoriaSeleccionada === "Otro" ? otraCategoria : categoriaSeleccionada;
-    console.log("Categoría seleccionada:", categoriaFinal);
-    // Aquí iría la lógica para guardar la categoría
-  };
-
-  return (
-    <>
-    <FormCard>
-      <TitleForm>Formulario de Categoría de Ingresos</TitleForm>
-      <p>Este es el formulario para administrar las categorías de ingresos.</p>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <Label htmlFor="descripcion" className="form-label">
-            Descripción
-          </Label>
-          <Input type="text" className="form-control" id="descripcion" />
-        </div>
-        <div className="mb-3">
-          <Label htmlFor="nombreCategoria" className="form-label">
-            Nombre Categoría
-          </Label>
-          <select
-            className="form-select"
-            id="nombreCategoria"
-            value={categoriaSeleccionada}
-            onChange={handleCategoriaChange}
-          >
-            <option value="" disabled>Seleccionar categoría</option>
-            {categorias.map((categoria, index) => (
-              <option key={index} value={categoria}>
-                {categoria}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {categoriaSeleccionada === "Otro" && (
-          <div className="mb-3">
-            <Label htmlFor="otraCategoria" className="form-label">
-              Otra Categoría
-            </Label>
-            <Input
-              type="text"
-              className="form-control"
-              id="otraCategoria"
-              value={otraCategoria}
-              onChange={handleOtraCategoriaChange}
-              required
-            />
-          </div>
-        )}
-
-        <Button type="submit" className="btn btn-primary">
-          Guardar Categoría
-        </Button>
-      </form>
-    </FormCard>
-    </>
-  );
-};
-export default CategoriaIngresosForm;
-*/
-
-
+export default GastosForm;
 
 const Main = styled.main`
   min-height: 100vh;
@@ -315,6 +321,5 @@ const InfoBox = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   box-sizing: border-box;
-  margin-top: 20px; /* Add space above the box */
-`;
-
+  margin-top: 20px; /* Add space above the box */`
+;

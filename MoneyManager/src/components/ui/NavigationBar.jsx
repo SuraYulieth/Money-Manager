@@ -30,21 +30,14 @@ const Navbar = ({ setActiveForm }) => {
           ) : (
             <>
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={() => setActiveForm("presupuesto")}>
-                  Presupuesto</button>
+                <Link className="nav-link" to="/ingresos">Ingresos</Link>
               </li>
               <li className="nav-item">
-                  <button className="nav-link btn btn-link" onClick={() => onSelectForm("ingresos")}>
-                    Ingresos</button>
-                </li>
-                <li className="nav-item">
-                  <button className="nav-link btn btn-link" onClick={() => onSelectForm("gastos")}>
-                    Gastos</button>
-                </li>
-                <li className="nav-item">
-                  <button className="nav-link btn btn-link" onClick={() => onSelectForm("objetivoAhorro")}>
-                    Ahorro</button>
-                </li>
+                <Link className="nav-link" to="/gastos">Gastos</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/ahorro">Ahorros</Link>
+              </li>
             </>
           )}
         </ul>
