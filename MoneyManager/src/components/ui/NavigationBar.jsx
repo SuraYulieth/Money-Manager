@@ -30,6 +30,9 @@ const Navbar = ({ setActiveForm }) => {
           ) : (
             <>
               <li className="nav-item">
+                <Link className="nav-link" to="/home">Inicio</Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/ingresos">Ingresos</Link>
               </li>
               <li className="nav-item">

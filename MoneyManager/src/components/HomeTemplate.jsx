@@ -128,7 +128,7 @@ export function HomeTemplate({ activeForm }) {
       default:
         return (
           <>
-            <Title>
+            {/*<Title>
               Bienvenido a MONEY MANAGER <br />
             </Title>
             <SubText>
@@ -136,7 +136,7 @@ export function HomeTemplate({ activeForm }) {
               controlar gastos e ingresos.
               <br />
               <br /> MUCHAS GRACIAS POR APOYAR ESTE PROYECTO
-            </SubText>
+            </SubText> */}
           </>
         );
     }

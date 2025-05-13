@@ -70,7 +70,7 @@ const Login = () => {
 
       <div className="col-lg-6 mb-4 mb-lg-0 text-center">
         <h2 className="text-primary fw-bold mb-4" style={{ fontSize: '2.5rem' }}>
-          <span style={{ fontSize: '0.6em' }}>BIENVENIDO A MONEY MANAGER</span>
+          <span style={{ fontSize: '0.6em' }}>BIENVENIDO A FRIEND</span>
           
         </h2>
         <img src={Imagen} alt="Imagen de inicio" className="img-fluid rounded shadow" style={{ maxWidth: '100%', borderRadius: '0.5rem', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }} />

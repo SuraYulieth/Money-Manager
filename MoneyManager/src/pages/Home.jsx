@@ -6,6 +6,7 @@ import { HomeTemplate } from "../components/HomeTemplate";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/ui/NavigationBar";
+import styled from "styled-components";
 
 
 const auth = getAuth(appFirebase);
@@ -42,7 +43,7 @@ const Home = ({ userEmail }) => {
             {/* Image Column */}
             <div className="col-lg-7 text-center mb-4 mb-lg-0">
               <h2 className="text-primary fw-bold mb-4">
-                BIENVENIDO A MONEY MANAGER
+                BIENVENIDO A CASH FRIEND
               </h2>
               <img
                 src={Imagen1}
@@ -57,9 +58,10 @@ const Home = ({ userEmail }) => {
               <div className="card shadow-lg border-0"  style={{ borderRadius: "1rem" }}>
                 <div className="card-body text-center p-5">
                   <h3 className="mb-4 display-6">
-                    Hola, <span className="text-primary">{userEmail}</span>
+                    Hola, friend{/*<span className="text-primary">{userEmail}</span>*/}
                   </h3>
-                  <HomeTemplate />
+                    <SubText>MONEY MANAGER nace por las pocas aplicaciones gratis que existen para
+              controlar gastos e ingresos.</SubText>
                   <button className="btn btn-danger w-100 py-3 fs-5" onClick={cerrarSesion}>
                     Cerrar Sesión
                   </button>
@@ -74,3 +76,20 @@ const Home = ({ userEmail }) => {
 };
 
 export default Home;
+
+const SubText = styled.p`
+  font-size: 1.1rem;
+  color: #8e8c86;
+  align-self: flex-start;
+  width: 100%;
+  margin: 1rem auto;
+  font-weight: 400;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+`;
