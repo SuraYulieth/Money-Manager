@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { cn } from "@/lib/utils" //if you are using shadcn/ui
+import { cn } from "@/lib/utils" 
 
 import PropTypes from 'prop-types';
 

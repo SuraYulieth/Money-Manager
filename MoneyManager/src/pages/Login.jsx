@@ -4,7 +4,7 @@ import appFirebase from "../services/firebaseconfig";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
-import Navbar from "../components/ui/NavigationBar";
+import Navbar from '../components/Navbar';
 import { useNavigate } from "react-router-dom";
 
 const auth = getAuth(appFirebase);

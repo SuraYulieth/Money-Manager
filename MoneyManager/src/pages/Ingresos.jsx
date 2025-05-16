@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../components/ui/NavigationBar";
+import Navbar from '../components/Navbar';
 import styled from "styled-components";
 
 const IngresosForm = () => {

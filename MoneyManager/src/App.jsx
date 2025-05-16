@@ -8,6 +8,7 @@ import Inicio from './pages/Inicio';
 import Ingresos from './pages/Ingresos'
 import Gastos from './pages/Gastos'
 import Ahorro from './pages/Ahorro';
+import Perfil from './pages/Perfil';
 import './App.css';
 
 const auth = getAuth(appFirebase);
@@ -49,6 +50,7 @@ function App() {
             <Route path="/ingresos" element={<Ingresos />} />
             <Route path="/gastos" element={<Gastos />} />
             <Route path="/ahorro" element={<Ahorro/>}/>
+            <Route path="/Perfil" element={<Perfil/>} />
           </Routes>
         </main>
 

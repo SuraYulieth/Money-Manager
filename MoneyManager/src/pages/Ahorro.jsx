@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import { useState } from 'react';
-import Navbar from '../components/ui/NavigationBar';
+import Navbar from '../components/Navbar';
 
 const ObjetivoAhorroForm = () => {
     return(
