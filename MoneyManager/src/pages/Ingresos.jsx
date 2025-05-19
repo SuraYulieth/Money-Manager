@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from '../components/Navbar'; // Asegúrate de que la ruta sea correcta
+import Navbar from '../components/Navbar'; 
 import styled from "styled-components";
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
@@ -10,221 +10,139 @@ const db = getFirestore(appFirebase);
 const auth = getAuth(appFirebase);
 
 const IngresosForm = () => {
-    const categoriasIngresos = ["Salario", "Extras"];
-    const [user, setUser] = useState(null);
-    const navigate = useNavigate();
-    const [descripcion, setDescripcion] = useState('');
-    const [fecha, setFecha] = useState('');
-    const [MontoIngreso, setMontoIngreso] = useState('');
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
+  const categoriasIngresos = ["Salario", "Extras"];
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const [descripcion, setDescripcion] = useState('');
+  const [fecha, setFecha] = useState('');
+  const [MontoIngreso, setMontoIngreso] = useState('');
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-            setUser(currentUser);
-            if (!currentUser) {
-                navigate('/');
-            }
-        });
-        return () => unsubscribe();
-    }, [navigate]);  // navigate como dependencia para evitar advertencias
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
+      if (!currentUser) {
+        navigate('/');
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate]); 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError(null);
-        setSuccess(false);
-
-        if (!user) {
-            setError("Por favor, inicie sesión para registrar ingresos.");
-            return;
-        }
-
-        const categoria = e.target.categoriaIngresos.value;
-        const monto = parseFloat(e.target.monto.value);
-        const fechaObjeto = fecha ? new Date(fecha) : null; // Manejar el caso de fecha vacía
-
-        if (!categoria || !descripcion || !fechaObjeto || isNaN(monto)) {
-            setError("Por favor, complete todos los campos con valores válidos.");
-            return;
-        }
-
-        try {
-            const docRef = await addDoc(collection(db, "users", user.uid, "Ingresos"), {
-                categoria,
-                descripcion,
-                fecha: fechaObjeto,
-                monto,
-                timestamp: new Date()
-            });
-            console.log("Documento escrito con ID: ", docRef.id);
-            setSuccess(true);
-            alert("¡Ingreso registrado exitosamente!");
-            e.target.reset();
-            setDescripcion('');
-            setFecha('');
-            setMontoIngreso('');
-
-        } catch (error) {
-            console.error("Error al agregar documento: ", error);
-            setError("Error al registrar el ingreso. Por favor, intente nuevamente.");
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(false);
 
     if (!user) {
-        return <div>Cargando...</div>;
+      setError("Por favor, inicie sesión para registrar ingresos.");
+      return;
     }
 
-    return (
-        <>
-            <Navbar />
-            <FormCard>
-                <TitleForm>Ingresos</TitleForm>
-                <p>Formulario para registrar ingresos.</p>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <Label htmlFor="categoriaIngresos" className="form-label">
-                            Categoría de Ingresos
-                        </Label>
-                        <select className="form-select" id="categoriaIngresos" required>
-                            <option value="" disabled>Seleccionar categoría</option>
-                            {categoriasIngresos.map((categoria, index) => (
-                                <option key={index} value={categoria}>
-                                    {categoria}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="mb-3">
-                        <Label htmlFor="descripcion" className="form-label">
-                            Descripción
-                        </Label>
-                        <Input
-                            type="text"
-                            className="form-control"
-                            id="descripcion"
-                            value={descripcion}
-                            onChange={(e) => setDescripcion(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <Label htmlFor="fecha" className="form-label">
-                            Fecha
-                        </Label>
-                        <Input
-                            type="datetime-local"
-                            className="form-control"
-                            id="fecha"
-                            value={fecha}
-                            onChange={(e) => setFecha(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <Label htmlFor="monto" className="form-label">
-                            Monto
-                        </Label>
-                        <Input
-                            type="number"
-                            className="form-control"
-                            id="monto"
-                            value={MontoIngreso}
-                            onChange={(e) => setMontoIngreso(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <Button type="submit" className="btn btn-primary">
-                        Registrar Ingreso
-                    </Button>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                    {success && <p style={{ color: 'green' }}>Ingreso registrado exitosamente!</p>}
-                </form>
-            </FormCard>
-        </>
-    );
-};
-export default IngresosForm;  
+    const categoria = e.target.categoriaIngresos.value;
+    const monto = parseFloat(e.target.monto.value);
+    const fechaObjeto = fecha ? new Date(fecha) : null; 
 
+    if (!categoria || !descripcion || !fechaObjeto || isNaN(monto)) {
+      setError("Por favor, complete todos los campos con valores válidos.");
+      return;
+    }
 
-/*
-const CategoriaIngresosForm = () => {
-  // Simulamos las opciones de categoría que vienen de la imagen
-  const categorias = ["Hogar", "Alimento", "Vestimenta", "Otro"];
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
-  const [otraCategoria, setOtraCategoria] = useState('');
+    try {
+      const docRef = await addDoc(collection(db, "users", user.uid, "Ingresos"), {
+        categoria,
+        descripcion,
+        fecha: fechaObjeto,
+        monto,
+        timestamp: new Date()
+      });
+      console.log("Documento escrito con ID: ", docRef.id);
+      setSuccess(true);
+      alert("¡Ingreso registrado exitosamente!");
+      e.target.reset();
+      setDescripcion('');
+      setFecha('');
+      setMontoIngreso('');
 
-  const handleCategoriaChange = (event) => {
-    setCategoriaSeleccionada(event.target.value);
+    } catch (error) {
+        setError("Error al registrar el ingreso. Por favor, intente nuevamente.");
+    }
   };
 
-  const handleOtraCategoriaChange = (event) => {
-    setOtraCategoria(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const categoriaFinal = categoriaSeleccionada === "Otro" ? otraCategoria : categoriaSeleccionada;
-    console.log("Categoría seleccionada:", categoriaFinal);
-    // Aquí iría la lógica para guardar la categoría
-  };
+  if (!user) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <>
-    <FormCard>
-      <TitleForm>Formulario de Categoría de Ingresos</TitleForm>
-      <p>Este es el formulario para administrar las categorías de ingresos.</p>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <Label htmlFor="descripcion" className="form-label">
-            Descripción
-          </Label>
-          <Input type="text" className="form-control" id="descripcion" />
-        </div>
-        <div className="mb-3">
-          <Label htmlFor="nombreCategoria" className="form-label">
-            Nombre Categoría
-          </Label>
-          <select
-            className="form-select"
-            id="nombreCategoria"
-            value={categoriaSeleccionada}
-            onChange={handleCategoriaChange}
-          >
-            <option value="" disabled>Seleccionar categoría</option>
-            {categorias.map((categoria, index) => (
-              <option key={index} value={categoria}>
-                {categoria}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {categoriaSeleccionada === "Otro" && (
+      <Navbar />
+      <FormCard>
+        <TitleForm>Ingresos</TitleForm>
+        <p>Formulario para registrar ingresos.</p>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <Label htmlFor="otraCategoria" className="form-label">
-              Otra Categoría
+            <Label htmlFor="categoriaIngresos" className="form-label">
+              Categoría de Ingresos
+            </Label>
+            <select className="form-select" id="categoriaIngresos" required>
+              <option value="" disabled>Seleccionar categoría</option>
+              {categoriasIngresos.map((categoria, index) => (
+                <option key={index} value={categoria}>
+                  {categoria}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-3">
+            <Label htmlFor="descripcion" className="form-label">
+              Descripción
             </Label>
             <Input
               type="text"
               className="form-control"
-              id="otraCategoria"
-              value={otraCategoria}
-              onChange={handleOtraCategoriaChange}
+              id="descripcion"
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
               required
             />
           </div>
-        )}
-
-        <Button type="submit" className="btn btn-primary">
-          Guardar Categoría
-        </Button>
-      </form>
-    </FormCard>
+          <div className="mb-3">
+            <Label htmlFor="fecha" className="form-label">
+              Fecha
+            </Label>
+            <Input
+              type="datetime-local"
+              className="form-control"
+              id="fecha"
+              value={fecha}
+              onChange={(e) => setFecha(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <Label htmlFor="monto" className="form-label">
+              Monto
+            </Label>
+            <Input
+              type="number"
+              className="form-control"
+              id="monto"
+              value={MontoIngreso}
+              onChange={(e) => setMontoIngreso(e.target.value)}
+              required
+            />
+          </div>
+          <Button type="submit" className="btn btn-primary">
+            Registrar Ingreso
+          </Button>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {success && <p style={{ color: 'green' }}>Ingreso registrado exitosamente!</p>}
+        </form>
+      </FormCard>
     </>
   );
 };
-export default CategoriaIngresosForm;
-*/
+export default IngresosForm;
 
 
 
@@ -310,7 +228,7 @@ const Button = styled.button`
 `;
 const Box = styled.div`
   width: 100%; /* Make boxes take full width */
-  height: auto;  /* Adjust height as needed */
+  height: auto;  /* Adjust height as needed */
   min-height: 60vh;
   display: flex;
   flex-direction: column;
@@ -409,4 +327,3 @@ const InfoBox = styled.div`
   box-sizing: border-box;
   margin-top: 20px; /* Add space above the box */
 `;
-
