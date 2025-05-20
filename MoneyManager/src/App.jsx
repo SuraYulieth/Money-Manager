@@ -17,8 +17,8 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (userFirebase) => {
-      setUser(userFirebase);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
       setLoading(false);
     });
     return () => unsubscribe();

@@ -1,9 +1,11 @@
 import React from 'react';
 import Logo from '../../assets/MoneyManager.png';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = ({ setActiveForm }) => {
 
+  
   const location = useLocation();
   const esInicio = location.pathname === "/inicio" || location.pathname === "/login";
 

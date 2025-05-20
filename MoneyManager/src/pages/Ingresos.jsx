@@ -2,9 +2,45 @@ import React, { useState } from "react";
 import Navbar from "../components/ui/NavigationBar";
 import styled from "styled-components";
 import { db } from '../services/firebaseconfig';
+import { useAuth } from '../context/AuthContext';
+import { collection, addDoc } from "firebase/firestore";
 
 const IngresosForm = () => {
   const categoriasIngresos = ["Salario", "Extras"];
+  const { usuario } = useAuth();
+
+  const [categoria, setCategoria] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [monto, setMonto] = useState("");
+
+  const guardarIngreso = async(e) => {
+    e.preventDefault();
+
+    if(!usuario?.uid){
+      alert("Debes iniciar sesión para guardar ingresos")
+      return
+    }
+
+    try{
+      await addDoc(collection(db, "Ingresos"), {
+        uid: usuario.uid,
+        categoria, 
+        descripcion,
+        fecha: new Date(fecha),
+        monto: parseFloat(monto),
+        creadoEn: new Date(),
+      })
+      alert("Ingreso registrado correctamente");
+      setCategoria("");
+      setDescripcion("");
+      setFecha("");
+      setMonto("");
+    } catch (error) {
+        console.error("Error al guardar ingreso:", error);
+        alert("Hubo un error al guardar el ingreso");
+  }
+}
 
   return (
     <>
@@ -12,12 +48,15 @@ const IngresosForm = () => {
     <FormCard>
       <TitleForm>Ingresos</TitleForm>
       <p>Formulario para registrar ingresos.</p>
-      <form>
+      <form onSubmit={guardarIngreso}>
         <div className="mb-3">
+
           <Label htmlFor="categoriaIngresos" className="form-label">
             Categoría de Ingresos
           </Label>
-          <select className="form-select" id="categoriaIngresos">
+
+          <select className="form-select" id="categoriaIngresos" 
+            value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="" disabled>Seleccionar categoría</option>
             {categoriasIngresos.map((categoria, index) => (
               <option key={index} value={categoria}>
@@ -25,24 +64,28 @@ const IngresosForm = () => {
               </option>
             ))}
           </select>
+
         </div>
         <div className="mb-3">
           <Label htmlFor="descripcion" className="form-label">
             Descripción
           </Label>
-          <Input type="text" className="form-control" id="descripcion" />
+          <Input type="text" className="form-control" id="descripcion" 
+          value={descripcion} onChange={(e) => setDescripcion(e.target.value)}/>
         </div>
         <div className="mb-3">
           <Label htmlFor="fecha" className="form-label">
             Fecha
           </Label>
-          <Input type="datetime-local" className="form-control" id="fecha" />
+          <Input type="datetime-local" className="form-control" id="fecha" 
+          value={fecha} onChange={(e) => setFecha(e.target.value)}/>
         </div>
         <div className="mb-3">
           <Label htmlFor="monto" className="form-label">
             Monto
           </Label>
-          <Input type="number" className="form-control" id="monto" />
+          <Input type="number" className="form-control" id="monto" 
+          value={monto} onChange={(e) => setMonto(e.target.value)}/>
         </div>
         <Button type="submit" className="btn btn-primary">
           Registrar Ingreso

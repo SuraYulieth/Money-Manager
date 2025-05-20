@@ -3,38 +3,79 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import { useState } from 'react';
 import Navbar from '../components/ui/NavigationBar';
+import { db } from '../services/firebaseconfig'
+import { collection, addDoc } from 'firebase/firestore';
+import { useAuth } from '../context/AuthContext';
 
 const ObjetivoAhorroForm = () => {
+  const { usuario } = useAuth();
+
+  const [fechaLimite, setFechaLimite] = useState("");
+  const [montoAhorrado, setMontoAhorrado] = useState("");
+  const [montoObjetivo, setMontoObjetivo] = useState("");
+  const [nombreObjetivo, setNombreObjetivo] = useState("");
+
+  const guardarAhorro = async(e) => {
+  e.preventDefault();
+      if(!usuario?.uid){
+        alert("Debes iniciar sesión para guardar Ahorro")
+        return
+      }
+  
+      try{
+        await addDoc(collection(db, "Objetivo_Ahorro"), {
+          uid: usuario.uid,
+          montoAhorrado: parseFloat(montoAhorrado), 
+          montoObjetivo: parseFloat(montoObjetivo), 
+          nombreObjetivo,
+          fechaLimite: new Date(fechaLimite),
+          creadoEn: new Date(),
+        })
+        alert("Ahorro registrado correctamente");
+        setMontoAhorrado("");
+        setMontoObjetivo("");
+        setNombreObjetivo("");
+        setFechaLimite("");
+      } catch (error) {
+          console.error("Error al guardar ingreso:", error);
+          alert("Hubo un error al guardar el ingreso");
+      }
+    }
+
     return(
         <>
         <Navbar/>
         <FormCard>
             <TitleForm>Objetivo de Ahorro</TitleForm>
             <p>Formulario para establecer metas de ahorro.</p>
-            <form>
+            <form onSubmit={guardarAhorro}>
             <div className="mb-3">
                 <Label htmlFor="fechaLimite" className="form-label">
                 Fecha Limite
                 </Label>
-                <Input type="date" className="form-control" id="fechaLimite" />
+                <Input type="date" className="form-control" id="fechaLimite" 
+                  value={fechaLimite} onChange={(e) => setFechaLimite(e.target.value)}/>
             </div>
             <div className="mb-3">
                 <Label htmlFor="montoAhorrado" className="form-label">
                 Monto Ahorrado
                 </Label>
-                <Input type="number" className="form-control" id="montoAhorrado" />
+                <Input type="number" className="form-control" id="montoAhorrado" 
+                value={montoAhorrado} onChange={(e) => setMontoAhorrado(e.target.value)}/>
             </div>
             <div className="mb-3">
                 <Label htmlFor="montoObjetivo" className="form-label">
                 Monto Objetivo
                 </Label>
-                <Input type="number" className="form-control" id="montoObjetivo" />
+                <Input type="number" className="form-control" id="montoObjetivo" 
+                value={montoObjetivo} onChange={(e) => setMontoObjetivo(e.target.value)}/>
             </div>
             <div className="mb-3">
                 <Label htmlFor="nombreObjetivo" className="form-label">
                 Nombre del Objetivo
                 </Label>
-                <Input type="text" className="form-control" id="nombreObjetivo" />
+                <Input type="text" className="form-control" id="nombreObjetivo" 
+                value={nombreObjetivo} onChange={(e) => setNombreObjetivo(e.target.value)}/>
             </div>
             <Button type="submit" className="btn btn-primary">
                 Guardar Objetivo

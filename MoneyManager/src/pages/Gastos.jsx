@@ -1,13 +1,22 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useFetcher, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import { useState } from 'react';
 import Navbar from '../components/ui/NavigationBar';
+import { useAuth } from '../context/AuthContext';
+import { addDoc, collection } from 'firebase/firestore';
+import {db} from '../services/firebaseconfig'
 
 const GastosForm = () => {
   const categoriasBase = ["Comida", "Transporte", "Ocio", "Otros"];
   const [categoriaGastoSeleccionada, setCategoriaGastoSeleccionada] = useState('');
   const [otraCategoriaGasto, setOtraCategoriaGasto] = useState('');
+  const { usuario } = useAuth();
+
+  const [descripcion, setDescripcion] = useState("");
+  const [categoriaGastos, setCategoriaGasto] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [monto, setMonto] = useState("");
 
   const handleCategoriaChange = (event) => {
     setCategoriaGastoSeleccionada(event.target.value);
@@ -19,10 +28,39 @@ const GastosForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const categoriaFinal = categoriaGastoSeleccionada === "Otros" ? otraCategoriaGasto : categoriaGastoSeleccionada;
-    console.log("Categoría de Gasto:", categoriaFinal);
-    // Aquí iría la lógica para guardar el gasto
+    const categoriaFinal = categoriaGastoSeleccionada === "Otros" ? 
+    otraCategoriaGasto 
+    : categoriaGastoSeleccionada;
+    guardarGastos(categoriaFinal);
   };
+
+  const guardarGastos = async(categoriaFinal) => {
+
+    if(!usuario?.uid){
+      alert("Debes iniciar sesión para guardar Gastos")
+      return
+    }
+
+    try{
+      await addDoc(collection(db, "Gastos"), {
+        uid: usuario.uid,
+        descripcion, 
+        categoria: categoriaFinal,
+        fecha: new Date(fecha),
+        monto: parseFloat(monto),
+        creadoEn: new Date(),
+      })
+      alert("Gasto registrado correctamente");
+      setCategoriaGastoSeleccionada("");
+      setOtraCategoriaGasto("");
+      setDescripcion("");
+      setFecha("");
+      setMonto("");
+    } catch (error) {
+        console.error("Error al guardar ingreso:", error);
+        alert("Hubo un error al guardar el ingreso");
+    }
+  }
 
   return (
     <>
@@ -30,12 +68,14 @@ const GastosForm = () => {
     <FormCard>
       <TitleForm>Formulario de Gastos</TitleForm>
       <p>Formulario para ingresar gastos.</p>
+
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <Label htmlFor="descripcion" className="form-label">
             Descripción
           </Label>
-          <Input type="text" className="form-control" id="descripcion" />
+          <Input type="text" className="form-control" id="descripcion" 
+          value={descripcion} onChange={(e) => setDescripcion(e.target.value)}/>
         </div>
         <div className="mb-3">
           <Label htmlFor="categoriaGastos" className="form-label">
@@ -76,13 +116,15 @@ const GastosForm = () => {
           <Label htmlFor="fecha" className="form-label">
             Fecha
           </Label>
-          <Input type="datetime-local" className="form-control" id="fecha" />
+          <Input type="datetime-local" className="form-control" id="fecha" 
+          value={fecha} onChange={(e) => setFecha(e.target.value)}/>
         </div>
         <div className="mb-3">
           <Label htmlFor="monto" className="form-label">
             Monto
           </Label>
-          <Input type="number" className="form-control" id="monto" />
+          <Input type="number" className="form-control" id="monto" 
+          value={monto} onChange={(e) => setMonto(e.target.value)}/>
         </div>
         <Button type="submit" className="btn btn-primary">
           Agregar Gasto
@@ -90,53 +132,6 @@ const GastosForm = () => {
       </form>
     </FormCard>
     </>
-  );
-};
-
-const IngresosForm = () => {
-  const categoriasIngresos = ["Salario", "Extras"];
-
-  return (
-    <FormCard>
-      <TitleForm>Ingresos</TitleForm>
-      <p>Formulario para registrar ingresos.</p>
-      <form>
-        <div className="mb-3">
-          <Label htmlFor="categoriaIngresos" className="form-label">
-            Categoría de Ingresos
-          </Label>
-          <select className="form-select" id="categoriaIngresos">
-            <option value="" disabled>Seleccionar categoría</option>
-            {categoriasIngresos.map((categoria, index) => (
-              <option key={index} value={categoria}>
-                {categoria}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-3">
-          <Label htmlFor="descripcion" className="form-label">
-            Descripción
-          </Label>
-          <Input type="text" className="form-control" id="descripcion" />
-        </div>
-        <div className="mb-3">
-          <Label htmlFor="fecha" className="form-label">
-            Fecha
-          </Label>
-          <Input type="datetime-local" className="form-control" id="fecha" />
-        </div>
-        <div className="mb-3">
-          <Label htmlFor="monto" className="form-label">
-            Monto
-          </Label>
-          <Input type="number" className="form-control" id="monto" />
-        </div>
-        <Button type="submit" className="btn btn-primary">
-          Registrar Ingreso
-        </Button>
-      </form>
-    </FormCard>
   );
 };
 

@@ -1,6 +1,6 @@
 import Navbar from "../components/ui/NavigationBar";
 import Imagen1 from "../assets/Imagen1.png";
-import React from "react";
+import React from "react";;
 
 const Inicio = () => {
 

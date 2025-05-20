@@ -33,8 +33,9 @@ const Login = () => {
     if (registrando) {
       try {
         const credencial = await createUserWithEmailAndPassword(auth, correo, contraseña);
-        console.log("Usuario creado:", credencial.user);
         const fechaDeRegistro = new Date();
+        console.log("Usuario creado:", credencial.user);
+
         await setDoc(doc(db, "users", credencial.user.uid), {
           nombre,
           apellidos,
