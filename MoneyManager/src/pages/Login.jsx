@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Imagen from "../assets/../assets/Imagen1.png";
-import appFirebase from "../services/firebaseconfig";
+import {appFirebase} from "../services/firebaseconfig";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";

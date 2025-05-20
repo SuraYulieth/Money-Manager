@@ -1,6 +1,6 @@
 import { signOut, getAuth } from "firebase/auth";
 import React, { useState, useEffect } from "react";
-import appFirebase from "../services/firebaseconfig";
+import {appFirebase} from "../services/firebaseconfig";
 import Imagen1 from "../assets/Imagen1.png";
 import { HomeTemplate } from "../components/HomeTemplate";
 import { useAuth } from "../context/AuthContext";

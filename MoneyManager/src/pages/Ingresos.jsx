@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/ui/NavigationBar";
 import styled from "styled-components";
+import { db } from '../services/firebaseconfig';
 
 const IngresosForm = () => {
   const categoriasIngresos = ["Salario", "Extras"];
