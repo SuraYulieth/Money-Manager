@@ -11,7 +11,7 @@ const Navbar = () => {
   const { usuario } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const esInicio = location.pathname === "/inicio" || location.pathname === "/login";
+  const esInicio = location.pathname === "/inicio" || location.pathname === "/login" || location.pathname === "/registro";
 
    const handleLogout = async () => {
     const result = await Swal.fire({
@@ -51,7 +51,7 @@ const Navbar = () => {
                 <Link className="nav-link" to="/home">Ingresar</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/home">Registrarse</Link>
+                <Link className="nav-link" to="/registro">Registrarse</Link>
               </li>
             </>
           ) : (
@@ -69,8 +69,7 @@ const Navbar = () => {
                 <Link className="nav-link" to="/ahorro">Ahorros</Link>
               </li>
               <li className='nav-item'>
-                <button onClick={handleLogout}
-                  className="btn btn-outline-danger"
+                <button onClick={handleLogout} className="btn btn-outline-danger"
                   style={{ borderRadius: "0.375rem" }}>Cerrar sesión</button>
               </li>
             </>
