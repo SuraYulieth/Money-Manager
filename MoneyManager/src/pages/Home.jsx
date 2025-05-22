@@ -41,10 +41,7 @@ const Home = ({ userEmail }) => {
           {/* Main Content */}
           <div className="row w-100 align-items-center">
             {/* Image Column */}
-            <div className="col-lg-7 text-center mb-4 mb-lg-0">
-              <h2 className="text-primary fw-bold mb-4">
-                BIENVENIDO A CASH FRIEND
-              </h2>
+            <div className="col-lg-7 text-center p-4 mb-lg-0">
               <img
                 src={Imagen1}
                 alt="Imagen de inicio"
@@ -62,9 +59,6 @@ const Home = ({ userEmail }) => {
                   </h3>
                     <SubText>MONEY MANAGER nace por las pocas aplicaciones gratis que existen para
               controlar gastos e ingresos.</SubText>
-                  <button className="btn btn-danger w-100 py-3 fs-5" onClick={cerrarSesion}>
-                    Cerrar Sesión
-                  </button>
                 </div>
               </div>
             </div>

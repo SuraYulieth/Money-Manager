@@ -11,8 +11,7 @@ const Inicio = () => {
         <div className="row align-items-center">
 
         {/* Columna de imagen */}
-        <div className="col-lg-6 text-center mb-4 mb-lg-0">
-          <h2 className="text-primary fw-bold mb-4">BIENVENIDO A CASH FRIEND</h2>
+        <div className="col-lg-6 text-center p-4 mb-lg-0">
           <img src={Imagen1} alt="Imagen de inicio" className="img-fluid rounded shadow" />
         </div>
       
