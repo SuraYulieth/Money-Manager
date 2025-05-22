@@ -103,7 +103,7 @@ const Login = () => {
                     }}
                     type="submit"
                   >
-                    Iniciar Sesión
+                    Iniciar sesión
                   </button>
                 </form>
           <div className="text-center mt-3">

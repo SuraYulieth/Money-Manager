@@ -48,7 +48,7 @@ const Registro = () => {
       });
 
       alert("Usuario registrado correctamente");
-      navigate("/login");
+      navigate("/home");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setErrorRegistro("Este correo ya está registrado.");
@@ -62,9 +62,9 @@ const Registro = () => {
     <>
       <Navbar />
       <div className="container-fluid">
-        <div className="row align-items-center">
+        <div className="row">
           <div className="col-lg-6 mb-0 mb-lg-0 text-center">
-           <div className="text-center mb-5 p-3"><div className="col">
+           <div className="text-center mb-2 p-5"><div className="col">
               <h1 style={{ fontWeight: 'bold' }}>Bienvenido a Cash Friend</h1></div></div>
             <div>
             <img
@@ -83,23 +83,24 @@ const Registro = () => {
           <div className="col-lg-6 p-2">
             <div className="card shadow-lg border-0" style={{ borderRadius: '0.5rem', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
               <div className="card-body p-5">
-                <h3 className="text-center mb-3" style={{ fontSize: "2rem", color: "#333" }}>
-                  Crear Cuenta
+                <h3 className="text-center mb-3" style={{ fontSize: "2rem", color: "#333", fontWeight: 'bold'}}>
+                  Crear cuenta
                 </h3>
 
                 <form onSubmit={handleRegistro}>
                   <div className="mb-3">
-                    <label htmlFor="nombre" className="form-label">Nombre</label>
-                    <input type="text" className="form-control" id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+                    <label htmlFor="nombre" className="form-label"  style={{ fontWeight: "bold", color: "#555" }}>Nombre</label>
+                    <input type="text" placeholder="Nombre de usuario" className="form-control" 
+                    id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required/>
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="apellidos" className="form-label">Apellidos</label>
-                    <input type="text" className="form-control" id="apellidos" value={apellidos} onChange={(e) => setApellidos(e.target.value)} required />
+                    <label htmlFor="apellidos" className="form-label"  style={{ fontWeight: "bold", color: "#555" }}>Apellidos</label >
+                    <input type="text" placeholder="Apellidos" className="form-control" id="apellidos" value={apellidos} onChange={(e) => setApellidos(e.target.value)} required />
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="tipoDocumento" className="form-label">Tipo de Documento</label>
+                    <label htmlFor="tipoDocumento" className="form-label"  style={{ fontWeight: "bold", color: "#555" }}>Tipo de Documento</label>
                     <select className="form-select" id="tipoDocumento" value={tipoDocumento} onChange={(e) => setTipoDocumento(e.target.value)} required>
                       <option value="Cedula">Cédula</option>
                       <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
@@ -108,23 +109,23 @@ const Registro = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="documento" className="form-label">Documento</label>
-                    <input type="text" className="form-control" id="documento" value={documento} onChange={(e) => setDocumento(e.target.value)} required />
+                    <label htmlFor="documento" className="form-label"  style={{ fontWeight: "bold", color: "#555" }}>Documento</label>
+                    <input type="text" placeholder="Número de documento" className="form-control" id="documento" value={documento} onChange={(e) => setDocumento(e.target.value)} required />
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="montoBase" className="form-label">Monto Base</label>
-                    <input type="number" className="form-control" id="montoBase" value={montoBase} onChange={(e) => setMontoBase(e.target.value)} />
+                    <label htmlFor="montoBase" className="form-label"  style={{ fontWeight: "bold", color: "#555" }}>Monto Base</label>
+                    <input type="number" placeholder="Monto base" className="form-control" id="montoBase" value={montoBase} onChange={(e) => setMontoBase(e.target.value)} />
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Correo Electrónico</label>
-                    <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <label htmlFor="email" className="form-label"  style={{ fontWeight: "bold", color: "#555" }}>Correo Electrónico</label>
+                    <input type="email" placeholder="Correo electrónico" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Contraseña</label>
-                    <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <label htmlFor="password" className="form-label"  style={{ fontWeight: "bold", color: "#555" }}>Contraseña</label>
+                    <input type="password" placeholder="Contraseña" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                   </div>
 
                   {errorRegistro && (
@@ -133,7 +134,7 @@ const Registro = () => {
                     </div>
                   )}
 
-                  <button type="submit" className="btn btn-success w-100">
+                  <button type="submit" className="btn btn-primary w-100" >
                     Registrarse
                   </button>
                 </form>

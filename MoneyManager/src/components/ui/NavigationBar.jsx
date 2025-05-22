@@ -35,7 +35,7 @@ const Navbar = () => {
 }
 
   return (
-    <nav className="navbar navbar-expand-sm bg-body-tertiary" style={{ backgroundColor: '#c7d2fe' }}>
+    <nav className="navbar navbar-expand-sm bg-body-tertiary" style={{ backgroundColor: '#007bff' }}>
     <div className="container-fluid">
 
       <a className="navbar-brand" href="/inicio">
